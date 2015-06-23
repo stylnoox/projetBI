@@ -1,9 +1,9 @@
-package XML;
+package src;
 
 public class RecupererCours
 {
 
-	public RecuperersCours()
+	public RecupererCours()
 	{
 		// TODO Auto-sgenerated constructor stub
 	}
