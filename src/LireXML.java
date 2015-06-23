@@ -111,7 +111,7 @@ public class LireXML
 		s.setBenchMark(e.getAttribute("benchmark"));
 		s.setCountry(e.getAttribute("country"));
 		s.setId(e.getAttribute("id"));
-		s.setIndustry((e.getAttribute("industry");
+		s.setIndustry(e.getAttribute("industry"));
 		s.setName(e.getAttribute("name"));
 		s.setSector(e.getAttribute("sector"));
 		s.setZone(e.getAttribute("zone"));
