@@ -30,7 +30,7 @@
          id="AMZN" 
          industry="Services" 
          name="Amazon.com Inc." 
-         sector="Catalog & Mail order " 
+         sector="Catalog Mail order " 
          zone="North America" />  
     <stock benchID="^NYA" 
          benchmark="NYSE" 
