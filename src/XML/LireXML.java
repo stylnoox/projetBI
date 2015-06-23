@@ -5,7 +5,7 @@ public class LireXML
 	
 	private Date startdate;
 	
-	public LireXML()
+	public LireXML()s
 	{
 		// TODO Auto-generated constructor stub
 	}
