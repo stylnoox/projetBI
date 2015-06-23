@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<input stardate="2005-01-07">
+<input startdate="2005-01-07">
   <stock benchID="^FCHI" 
          benchmark="CAC40" 
          country="France" 
