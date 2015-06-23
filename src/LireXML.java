@@ -28,7 +28,7 @@ public class LireXML
 	 */
 	public LireXML()
 	{
-		File input = new File("input.xml");
+		File input = new File("trunk/src/input.xml");
 		Document d = ouvrirXML(input);
 		setStockArray(recupererStocks(d));
 	}
