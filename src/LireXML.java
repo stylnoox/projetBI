@@ -75,9 +75,7 @@ public class LireXML
 		NodeList stockList = doc.getDocumentElement().getChildNodes();
 		ArrayList<Stock> as = null;
 		for(int i=0; i<stockList.getLength();i++)
-		{
 			as.add(stockXML2Node(stockList.item(i)));
-		}
 		return as;
 	}
 
