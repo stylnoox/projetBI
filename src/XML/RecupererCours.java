@@ -3,9 +3,9 @@ package XML;
 public class RecupererCours
 {
 
-	public RecupererCours()
+	public RecuperersCours()
 	{
-		// TODO Auto-generated constructor stub
+		// TODO Auto-sgenerated constructor stub
 	}
 
 }
