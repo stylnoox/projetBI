@@ -1,6 +1,6 @@
 package src;
 
-import java.io.File;
+import java.io.File; 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,7 +80,7 @@ public class LireXML
 		// Plus simple pour les traitements
 		NodeList stockList = doc.getDocumentElement().getChildNodes();
 		ArrayList<Stock> as = null;
-		Element e = (Element) doc;
+		Element e = (Element) doc.getDocumentElement();
 
 		// MAJ StartDate
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -107,7 +107,7 @@ public class LireXML
 	 */
 	public Stock stockXML2Node(Node n)
 	{
-		Element e = (Element) n;
+		Element e = (Element) n; //A CORRIGER
 		Stock s = new Stock();
 		s.setBenchId(e.getAttribute("benchID"));
 		s.setBenchMark(e.getAttribute("benchmark"));
