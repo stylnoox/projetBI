@@ -2,6 +2,8 @@ package src;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -65,22 +67,40 @@ public class LireXML
 	}
 
 	/**
-	 * @param doc -> Document récupéré à partir de l'input.xml
-	 * @return une ArrayList de Stock
-	 * La startdate est aussi mise à jour
+	 * @param doc
+	 *            -> Document récupéré à partir de l'input.xml
+	 * @return une ArrayList de Stock La startdate est aussi mise à jour
 	 */
 	@SuppressWarnings("null")
 	public ArrayList<Stock> recupererStocks(Document doc)
 	{
+		// Récupération Document sous forme de Nodelist
+		// Plus simple pour les traitements
 		NodeList stockList = doc.getDocumentElement().getChildNodes();
 		ArrayList<Stock> as = null;
-		for(int i=0; i<stockList.getLength();i++)
+		Element e = (Element) doc;
+
+		// MAJ StartDate
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String sd = e.getAttribute("startdate");
+		try
+		{
+			startdate = sdf.parse(sd);
+		} catch (ParseException e1)
+		{
+			System.out.println("Format date incorrect : YYYY-MM-DD attendu !");
+			e1.printStackTrace();
+		}
+
+		// Récupération des stocks XML vers Objet
+		for (int i = 0; i < stockList.getLength(); i++)
 			as.add(stockXML2Node(stockList.item(i)));
 		return as;
 	}
 
 	/**
-	 * @param n -> Noeud DOM correspondant à un Stock
+	 * @param n
+	 *            -> Noeud DOM correspondant à un Stock
 	 * @return un objet Stock correspondant au noeud n
 	 */
 	public Stock stockXML2Node(Node n)
@@ -97,8 +117,7 @@ public class LireXML
 		s.setZone(e.getAttribute("zone"));
 		return s;
 	}
-	
-	
+
 	/**
 	 * @return the startdate
 	 */
