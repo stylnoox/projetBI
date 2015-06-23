@@ -28,7 +28,9 @@ public class LireXML
 	 */
 	public LireXML()
 	{
-
+		File input = new File("input.xml");
+		Document d = ouvrirXML(input);
+		setStockArray(recupererStocks(d));
 	}
 
 	/**
@@ -133,6 +135,22 @@ public class LireXML
 	public void setStartdate(Date startdate)
 	{
 		this.startdate = startdate;
+	}
+
+	/**
+	 * @return the stockArray
+	 */
+	public ArrayList<Stock> getStockArray()
+	{
+		return stockArray;
+	}
+
+	/**
+	 * @param stockArray the stockArray to set
+	 */
+	public void setStockArray(ArrayList<Stock> stockArray)
+	{
+		this.stockArray = stockArray;
 	}
 
 }
