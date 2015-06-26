@@ -30,7 +30,7 @@
          id="AMZN" 
          industry="Services" 
          name="Amazon.com Inc." 
-         sector="Catalog Mail order " 
+         sector="Catalog Mail and order" 
          zone="North America" />  
     <stock benchID="^NYA" 
          benchmark="NYSE" 
@@ -38,7 +38,7 @@
          id="XOM" 
          industry="Basic Materials" 
          name="Exxon Mobil Corporation" 
-         sector="Major Integrated Oil & Gas" 
+         sector="Major Integrated Oil Gas" 
          zone="Notrh America" /> 
     <stock benchID="^FCHI" 
          benchmark="CAC40" 

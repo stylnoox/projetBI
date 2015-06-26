@@ -1,6 +1,6 @@
 package src;
 
-import java.io.File; 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,9 +80,9 @@ public class LireXML
 		// Plus simple pour les traitements
 		NodeList stockList = doc.getDocumentElement().getChildNodes();
 		ArrayList<Stock> as = null;
-		Element e = (Element) doc.getDocumentElement();
 
 		// MAJ StartDate
+		Element e = (Element) doc.getDocumentElement();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String sd = e.getAttribute("startdate");
 		try
@@ -93,11 +93,16 @@ public class LireXML
 			System.out.println("Format date incorrect : YYYY-MM-DD attendu !");
 			e1.printStackTrace();
 		}
-
+		System.out.println("getLength() => " + stockList.getLength());
 		// Récupération des stocks XML vers Objet
 		for (int i = 0; i < stockList.getLength(); i++)
-			as.add(stockXML2Node(stockList.item(i)));
+		{
+			System.out.println(i + "->" + stockList.item(i).getNodeValue());
+//			as.add(stockXML2Node(stockList.item(i)));
+			stockXML2Node(stockList.item(i));
+		}
 		return as;
+
 	}
 
 	/**
@@ -107,16 +112,18 @@ public class LireXML
 	 */
 	public Stock stockXML2Node(Node n)
 	{
-		Element e = (Element) n; //A CORRIGER
 		Stock s = new Stock();
-		s.setBenchId(e.getAttribute("benchID"));
-		s.setBenchMark(e.getAttribute("benchmark"));
-		s.setCountry(e.getAttribute("country"));
-		s.setId(e.getAttribute("id"));
-		s.setIndustry(e.getAttribute("industry"));
-		s.setName(e.getAttribute("name"));
-		s.setSector(e.getAttribute("sector"));
-		s.setZone(e.getAttribute("zone"));
+		System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
+			// Element e = n.; // A CORRIGER
+			s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
+			s.setBenchMark(n.getAttributes().getNamedItem("benchmark").getNodeValue());
+			s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue());
+			s.setId(n.getAttributes().getNamedItem("id").getNodeValue());
+			s.setIndustry(n.getAttributes().getNamedItem("industry").getNodeValue());
+			s.setName(n.getAttributes().getNamedItem("name").getNodeValue());
+			s.setSector(n.getAttributes().getNamedItem("sector").getNodeValue());
+			s.setZone(n.getAttributes().getNamedItem("zone").getNodeValue());
+		
 		return s;
 	}
 
@@ -146,7 +153,8 @@ public class LireXML
 	}
 
 	/**
-	 * @param stockArray the stockArray to set
+	 * @param stockArray
+	 *            the stockArray to set
 	 */
 	public void setStockArray(ArrayList<Stock> stockArray)
 	{
