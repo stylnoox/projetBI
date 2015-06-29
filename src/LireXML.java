@@ -120,7 +120,9 @@ public class LireXML
 		Stock s = new Stock();
 		System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
 			// Element e = n.; // A CORRIGER
-			s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
+			s.setBenchId(n.getNodeValue());
+			System.out.println("nodeValue : "+n.getNodeValue());
+//			s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
 			s.setBenchMark(n.getAttributes().getNamedItem("benchmark").getNodeValue());
 			s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue());
 			s.setId(n.getAttributes().getNamedItem("id").getNodeValue());

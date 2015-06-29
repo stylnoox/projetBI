@@ -1,5 +1,8 @@
 package src;
 
+import java.util.Date;
+import java.util.Map;
+
 /**
  * @author Vincent
  *
@@ -19,6 +22,7 @@ public class Stock
 	private String sector;
 	private String zone;
 	private String country;
+	private Map<Date,Double> histoCours;
 	
 	public Stock()
 	{
@@ -145,6 +149,38 @@ public class Stock
 	public void setCountry(String country)
 	{
 		this.country = country;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @return the histoCours
+	 */
+	public Map<Date,Double> getHistoCours()
+	{
+		return histoCours;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @param histoCours the histoCours to set
+	 */
+	public void setHistoCours(Map<Date,Double> histoCours)
+	{
+		this.histoCours = histoCours;
 	}
 
 }
