@@ -92,6 +92,7 @@ public class LireXML
 		try
 		{
 			startdate = sdf.parse(sd);
+			System.out.println(startdate);
 		} catch (ParseException e1)
 		{
 			System.out.println("Format date incorrect : YYYY-MM-DD attendu !");
@@ -99,7 +100,7 @@ public class LireXML
 		}
 		System.out.println("getLength() => " + stockList.getLength());
 		// Récupération des stocks XML vers Objet
-		for (int i = 0; i < stockList.getLength(); i++)
+		for (int i = 1; i < stockList.getLength(); i=i+2)
 		{
 			System.out.println(i + "->" + stockList.item(i).getNodeValue());
 //			as.add(stockXML2Node(stockList.item(i)));
@@ -121,15 +122,16 @@ public class LireXML
 		System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
 			// Element e = n.; // A CORRIGER
 			s.setBenchId(n.getNodeValue());
-			System.out.println("nodeValue : "+n.getNodeValue());
+//			System.out.println("nodeValue : "+n.getNodeValue()+n);
 //			s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
-			s.setBenchMark(n.getAttributes().getNamedItem("benchmark").getNodeValue());
-			s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue());
-			s.setId(n.getAttributes().getNamedItem("id").getNodeValue());
-			s.setIndustry(n.getAttributes().getNamedItem("industry").getNodeValue());
-			s.setName(n.getAttributes().getNamedItem("name").getNodeValue());
-			s.setSector(n.getAttributes().getNamedItem("sector").getNodeValue());
-			s.setZone(n.getAttributes().getNamedItem("zone").getNodeValue());
+//			System.out.println(n.getAttributes().getNamedItem("benchmark"));
+			s.setBenchMark(n.getAttributes().getNamedItem("benchmark").toString());
+			s.setCountry(n.getAttributes().getNamedItem("country").toString());
+			s.setId(n.getAttributes().getNamedItem("id").toString());
+			s.setIndustry(n.getAttributes().getNamedItem("industry").toString());
+			s.setName(n.getAttributes().getNamedItem("name").toString());
+			s.setSector(n.getAttributes().getNamedItem("sector").toString());
+			s.setZone(n.getAttributes().getNamedItem("zone").toString());
 		
 		return s;
 	}
