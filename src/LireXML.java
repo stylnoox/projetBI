@@ -83,7 +83,7 @@ public class LireXML
 		// Récupération Document sous forme de Nodelist
 		// Plus simple pour les traitements
 		NodeList stockList = doc.getDocumentElement().getChildNodes();
-		ArrayList<Stock> as = null;
+		ArrayList<Stock> as = new ArrayList<Stock>();
 
 		// MAJ StartDate
 		Element e = (Element) doc.getDocumentElement();
@@ -98,13 +98,15 @@ public class LireXML
 			System.out.println("Format date incorrect : YYYY-MM-DD attendu !");
 			e1.printStackTrace();
 		}
-		System.out.println("getLength() => " + stockList.getLength());
+//		System.out.println("getLength() => " + stockList.getLength());
 		// Récupération des stocks XML vers Objet
 		for (int i = 1; i < stockList.getLength(); i=i+2)
 		{
-			System.out.println(i + "->" + stockList.item(i).getNodeValue());
 //			as.add(stockXML2Node(stockList.item(i)));
-			stockXML2Node(stockList.item(i));
+//			System.out.println("LECTURE : \nbenchID: "+s.getBenchId()+"\nbenchmark: "+s.getBenchMark()+
+//					"\ncountry: "+s.getCountry()+"\nid: "+s.getId()+"\nindustry: "+s.getIndustry()+
+//					"\nname: "+s.getName()+"\nsector: "+s.getSector()+"\nzone: "+s.getZone());
+			as.add(stockXML2Node(stockList.item(i)));
 		}
 		return as;
 
@@ -119,12 +121,12 @@ public class LireXML
 	public Stock stockXML2Node(Node n)
 	{
 		Stock s = new Stock();
-		System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
+//			System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
 			// Element e = n.; // A CORRIGER
-			s.setBenchId(n.getNodeValue());
 //			System.out.println("nodeValue : "+n.getNodeValue()+n);
 //			s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
 //			System.out.println(n.getAttributes().getNamedItem("benchmark"));
+			s.setBenchId(n.getAttributes().getNamedItem("benchID").toString());
 			s.setBenchMark(n.getAttributes().getNamedItem("benchmark").toString());
 			s.setCountry(n.getAttributes().getNamedItem("country").toString());
 			s.setId(n.getAttributes().getNamedItem("id").toString());
@@ -132,7 +134,10 @@ public class LireXML
 			s.setName(n.getAttributes().getNamedItem("name").toString());
 			s.setSector(n.getAttributes().getNamedItem("sector").toString());
 			s.setZone(n.getAttributes().getNamedItem("zone").toString());
-		
+			
+			System.out.println("\nLECTURE : \nbenchID: "+s.getBenchId()+"\nbenchmark: "+s.getBenchMark()+
+					"\ncountry: "+s.getCountry()+"\nid: "+s.getId()+"\nindustry: "+s.getIndustry()+
+					"\nname: "+s.getName()+"\nsector: "+s.getSector()+"\nzone: "+s.getZone()+"\n");
 		return s;
 	}
 	//*/
