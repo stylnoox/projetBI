@@ -51,7 +51,7 @@ public class RecupererCours
 		 }
 		  
 		 return prix;
-		 x
+		 
 	 }
 	 
 	 public void affichageCours(){
