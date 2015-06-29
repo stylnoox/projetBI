@@ -17,6 +17,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * @author Vincent
+ *
+ */
 public class LireXML
 {
 
@@ -110,6 +114,7 @@ public class LireXML
 	 *            -> Noeud DOM correspondant à un Stock
 	 * @return un objet Stock correspondant au noeud n
 	 */
+	//*
 	public Stock stockXML2Node(Node n)
 	{
 		Stock s = new Stock();
@@ -126,9 +131,35 @@ public class LireXML
 		
 		return s;
 	}
+	//*/
+//	VERSION JUANSHU
+	/*
+	public Stock stockXML2Node(Node n)
+	{
+		Element e = (Element) n;
+		Stock s = new Stock();
+		//récupérer les élements de cette racine et les mettre dans Stocks
+	    //---getElement plutôt? ---
+		s.setBenchId(e.getElementsByTagName("benchID").item(0).getTextContent());
+		s.setBenchMark(e.getElementsByTagName("benchmark").item(0).getTextContent());
+		s.setCountry(e.getElementsByTagName("country").item(0).getTextContent());
+		s.setId(e.getElementsByTagName("id").item(0).getTextContent());
+		s.setIndustry(e.getElementsByTagName("industry").item(0).getTextContent());
+		s.setName(e.getElementsByTagName("name").item(0).getTextContent());
+		s.setSector(e.getElementsByTagName("sector").item(0).getTextContent());
+		s.setZone(e.getElementsByTagName("zone").item(0).getTextContent());
+		return s;
+	}
+	//*/
 
 	/**
 	 * @return the startdate
+	 */
+	/**
+	 * @return
+	 */
+	/**
+	 * @return
 	 */
 	public Date getStartdate()
 	{
