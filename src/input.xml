@@ -39,7 +39,7 @@
          industry="Basic Materials" 
          name="Exxon Mobil Corporation" 
          sector="Major Integrated Oil Gas" 
-         zone="Notrh America" /> 
+         zone="North America" /> 
     <stock benchID="^FCHI" 
          benchmark="CAC40" 
          country="France" 
