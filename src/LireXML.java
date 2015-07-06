@@ -51,14 +51,15 @@ public class LireXML
 
 		// RAJOUT HISTORIQUE COURS POUR CHAQUE STOCK
 		for (Stock s : stockArray)
-			s.setHistoCours(rc.getCours(startdate, today, url));
-		;
+			System.out.println(s.getId());
+			//			s.setHistoCours(rc.getCours(startdate, today, url));
+		
 	}
 
 	/**
 	 * @param f
 	 *            -> Fichier XML qu'on veut parser
-	 * @return -> objet Document avec le contenu et la structure de f
+	 * @return -> objet Document avec la structure et le contenu de f
 	 */
 	public Document ouvrirXML(File f)
 	{
@@ -93,7 +94,8 @@ public class LireXML
 	/**
 	 * @param doc
 	 *            -> Document récupéré à partir de l'input.xml
-	 * @return une ArrayList de Stock La startdate est aussi mise à jour
+	 * @return une ArrayList de Stock 
+	 * Modifie également la startdate de l'instance
 	 */
 	@SuppressWarnings("null")
 	public ArrayList<Stock> recupererStocks(Document doc)
@@ -161,25 +163,6 @@ public class LireXML
 		return s;
 	}
 
-	// */
-	// VERSION JUANSHU
-	/*
-	 * public Stock stockXML2Node(Node n) { Element e = (Element) n; Stock s =
-	 * new Stock(); //récupérer les élements de cette racine et les mettre dans
-	 * Stocks //---getElement plutôt? ---
-	 * s.setBenchId(e.getElementsByTagName("benchID").item(0).getTextContent());
-	 * s
-	 * .setBenchMark(e.getElementsByTagName("benchmark").item(0).getTextContent(
-	 * ));
-	 * s.setCountry(e.getElementsByTagName("country").item(0).getTextContent());
-	 * s.setId(e.getElementsByTagName("id").item(0).getTextContent());
-	 * s.setIndustry
-	 * (e.getElementsByTagName("industry").item(0).getTextContent());
-	 * s.setName(e.getElementsByTagName("name").item(0).getTextContent());
-	 * s.setSector(e.getElementsByTagName("sector").item(0).getTextContent());
-	 * s.setZone(e.getElementsByTagName("zone").item(0).getTextContent());
-	 * return s; } //
-	 */
 
 	/**
 	 * @return the startdate
