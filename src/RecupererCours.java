@@ -8,9 +8,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.opencsv.CSVReader;
 
@@ -42,7 +42,7 @@ public class RecupererCours
 	@SuppressWarnings("resource")
 	public Map<Date, Double> getCours()
 	{
-		Map<Date, Double> map = new HashMap<Date, Double>();
+		Map<Date, Double> map = new TreeMap<Date, Double>();
 		try
 		{
 			// Generation url
@@ -82,6 +82,57 @@ public class RecupererCours
 		return map;
 	}
 
+	/**
+	 * @return Une MAP associant chaque date du cours 
+	 * de l'action de s à sa valeur
+	 */
+	@SuppressWarnings("resource")
+	public Map<Date, Double> getCoursIndex()
+	{
+		Map<Date, Double> map = new TreeMap<Date, Double>();
+		try
+		{
+			// Generation url
+			URL url = new URL(genererAdresseIndex());
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					url.openStream()));
+			CSVReader cr = new CSVReader(in);
+
+			List<String[]> ls = cr.readAll();
+			ls.remove(0);
+
+			// Recuperation date et close
+			for (String[] line : ls)
+			{
+				@SuppressWarnings("deprecation")
+				Date d = new Date(1900, 1, 1);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String sd = line[0];
+				try
+				{
+					d = sdf.parse(sd);
+				} catch (ParseException e1)
+				{
+					System.out
+							.println("Format date incorrect : YYYY-MM-DD attendu !");
+					e1.printStackTrace();
+				}
+				map.put(d, Double.parseDouble(line[4]));
+
+			}
+
+		} catch (IOException e1)
+		{
+			System.out.println("Ouverture du fichier impossible");
+
+		}
+		return map;
+	}
+	
+	
+	/**
+	 * @return String : URL du CSV du Stock
+	 */
 	private String genererAdresse()
 	{
 
@@ -95,6 +146,30 @@ public class RecupererCours
 		calEd.setTime(today);
 
 		return "http://real-chart.finance.yahoo.com/table.csv?s=" + s.getId()
+				+ "&a=" + calSd.get(Calendar.MONTH) + "&b="
+				+ calSd.get(Calendar.DAY_OF_MONTH) + "&c="
+				+ calSd.get(Calendar.YEAR) + "&d=" + calEd.get(Calendar.MONTH)
+				+ "&e=" + calEd.get(Calendar.DAY_OF_MONTH) + "&f="
+				+ calEd.get(Calendar.YEAR) + "&g=d&ignore=.csv";
+
+	}
+
+	/**
+	 * @return String : URL du CSV de l'index
+	 */
+	private String genererAdresseIndex()
+	{
+
+		// Utilisation de Calendar à la place de Date
+		// Plus simple à gérer
+		Calendar calSd = Calendar.getInstance();
+		Calendar calEd = Calendar.getInstance();
+		// StartDate & EndDate
+		calSd.setTime(startDate);
+		Date today = new Date(); //Date d'aujourd'hui
+		calEd.setTime(today);
+
+		return "http://real-chart.finance.yahoo.com/table.csv?s=" + s.getBenchId()
 				+ "&a=" + calSd.get(Calendar.MONTH) + "&b="
 				+ calSd.get(Calendar.DAY_OF_MONTH) + "&c="
 				+ calSd.get(Calendar.YEAR) + "&d=" + calEd.get(Calendar.MONTH)
