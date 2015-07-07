@@ -23,6 +23,7 @@ public class Stock
 	private String zone;
 	private String country;
 	private Map<Date,Double> histoCours;
+	private CalculerCSV ccsv;
 	
 	public Stock()
 	{
@@ -181,6 +182,38 @@ public class Stock
 	public void setHistoCours(Map<Date,Double> histoCours)
 	{
 		this.histoCours = histoCours;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @return the ccsv
+	 */
+	public CalculerCSV getCcsv()
+	{
+		return ccsv;
+	}
+
+
+
+
+
+
+
+
+
+	/**
+	 * @param ccsv the ccsv to set
+	 */
+	public void setCcsv(CalculerCSV ccsv)
+	{
+		this.ccsv = ccsv;
 	}
 
 }

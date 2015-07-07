@@ -54,6 +54,8 @@ public class LireXML
 		{
 			System.out.println(s.getId());
 			rc = new RecupererCours(s, startdate);
+			s.setHistoCours(rc.getCours());
+			System.out.println(s.getHistoCours());
 //			s.setHistoCours(rc.getCours(startdate, today, url));
 			
 		}
