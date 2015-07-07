@@ -51,8 +51,12 @@ public class LireXML
 
 		// RAJOUT HISTORIQUE COURS POUR CHAQUE STOCK
 		for (Stock s : stockArray)
+		{
 			System.out.println(s.getId());
-			//			s.setHistoCours(rc.getCours(startdate, today, url));
+			rc = new RecupererCours(s, startdate);
+//			s.setHistoCours(rc.getCours(startdate, today, url));
+			
+		}
 		
 	}
 
@@ -135,6 +139,8 @@ public class LireXML
 	/**
 	 * @param n
 	 *            -> Noeud DOM correspondant à un Stock
+	 *            Ici on récupère sous forme d'objet Stock
+	 *            le produit décrit dans le input.xml
 	 * @return un objet Stock correspondant au noeud n
 	 */
 	// *
@@ -146,14 +152,14 @@ public class LireXML
 		// System.out.println("nodeValue : "+n.getNodeValue()+n);
 		// s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
 		// System.out.println(n.getAttributes().getNamedItem("benchmark"));
-		s.setBenchId(n.getAttributes().getNamedItem("benchID").toString());
-		s.setBenchMark(n.getAttributes().getNamedItem("benchmark").toString());
-		s.setCountry(n.getAttributes().getNamedItem("country").toString());
-		s.setId(n.getAttributes().getNamedItem("id").toString());
-		s.setIndustry(n.getAttributes().getNamedItem("industry").toString());
-		s.setName(n.getAttributes().getNamedItem("name").toString());
-		s.setSector(n.getAttributes().getNamedItem("sector").toString());
-		s.setZone(n.getAttributes().getNamedItem("zone").toString());
+		s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue().toString());
+		s.setBenchMark(n.getAttributes().getNamedItem("benchmark").getNodeValue().toString());
+		s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue().toString());
+		s.setId(n.getAttributes().getNamedItem("id").getNodeValue().toString());
+		s.setIndustry(n.getAttributes().getNamedItem("industry").getNodeValue().toString());
+		s.setName(n.getAttributes().getNamedItem("name").getNodeValue().toString());
+		s.setSector(n.getAttributes().getNamedItem("sector").getNodeValue().toString());
+		s.setZone(n.getAttributes().getNamedItem("zone").getNodeValue().toString());
 
 		System.out.println("\nLECTURE : \nbenchID: " + s.getBenchId()
 				+ "\nbenchmark: " + s.getBenchMark() + "\ncountry: "
