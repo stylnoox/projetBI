@@ -60,12 +60,19 @@ public class LireXML
 			ccsv.getPerfAnnualisee();
 			ccsv.getPerfRelative();
 			ccsv.getVolatilite();
-//			System.out.println(s.getHistoCours());
-//			System.out.println(s.getHistoCoursIndex());
-//			s.setHistoCours(rc.getCours(startdate, today, url));
-			System.out.println("\n---------------------------" + "---------------------\n");
+			ccsv.getVolatiliteAnnualisee();
+			ccsv.getTrackingError();
+			ccsv.getTrackingErrorAnnualise();
+			ccsv.getRatioInformation();
+			ccsv.getBeta();
+			ccsv.getAlpha();
+			// System.out.println(s.getHistoCours());
+			// System.out.println(s.getHistoCoursIndex());
+			// s.setHistoCours(rc.getCours(startdate, today, url));
+			System.out.println("\n---------------------------"
+					+ "---------------------\n");
 		}
-		
+
 	}
 
 	/**
@@ -106,8 +113,8 @@ public class LireXML
 	/**
 	 * @param doc
 	 *            -> Document récupéré à partir de l'input.xml
-	 * @return une ArrayList de Stock 
-	 * Modifie également la startdate de l'instance
+	 * @return une ArrayList de Stock Modifie également la startdate de
+	 *         l'instance
 	 */
 	@SuppressWarnings("null")
 	public ArrayList<Stock> recupererStocks(Document doc)
@@ -146,9 +153,8 @@ public class LireXML
 
 	/**
 	 * @param n
-	 *            -> Noeud DOM correspondant à un Stock
-	 *            Ici on récupère sous forme d'objet Stock
-	 *            le produit décrit dans le input.xml
+	 *            -> Noeud DOM correspondant à un Stock Ici on récupère sous
+	 *            forme d'objet Stock le produit décrit dans le input.xml
 	 * @return un objet Stock correspondant au noeud n
 	 */
 	// *
@@ -160,14 +166,21 @@ public class LireXML
 		// System.out.println("nodeValue : "+n.getNodeValue()+n);
 		// s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue());
 		// System.out.println(n.getAttributes().getNamedItem("benchmark"));
-		s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue().toString());
-		s.setBenchMark(n.getAttributes().getNamedItem("benchmark").getNodeValue().toString());
-		s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue().toString());
+		s.setBenchId(n.getAttributes().getNamedItem("benchID").getNodeValue()
+				.toString());
+		s.setBenchMark(n.getAttributes().getNamedItem("benchmark")
+				.getNodeValue().toString());
+		s.setCountry(n.getAttributes().getNamedItem("country").getNodeValue()
+				.toString());
 		s.setId(n.getAttributes().getNamedItem("id").getNodeValue().toString());
-		s.setIndustry(n.getAttributes().getNamedItem("industry").getNodeValue().toString());
-		s.setName(n.getAttributes().getNamedItem("name").getNodeValue().toString());
-		s.setSector(n.getAttributes().getNamedItem("sector").getNodeValue().toString());
-		s.setZone(n.getAttributes().getNamedItem("zone").getNodeValue().toString());
+		s.setIndustry(n.getAttributes().getNamedItem("industry").getNodeValue()
+				.toString());
+		s.setName(n.getAttributes().getNamedItem("name").getNodeValue()
+				.toString());
+		s.setSector(n.getAttributes().getNamedItem("sector").getNodeValue()
+				.toString());
+		s.setZone(n.getAttributes().getNamedItem("zone").getNodeValue()
+				.toString());
 
 		System.out.println("\nLECTURE : \nbenchID: " + s.getBenchId()
 				+ "\nbenchmark: " + s.getBenchMark() + "\ncountry: "
@@ -176,7 +189,6 @@ public class LireXML
 				+ s.getSector() + "\nzone: " + s.getZone() + "\n");
 		return s;
 	}
-
 
 	/**
 	 * @return the startdate

@@ -1,12 +1,15 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.apache.commons.math3.stat.correlation.Covariance;
 
 public class CalculerCSV
 {
@@ -19,11 +22,11 @@ public class CalculerCSV
 	private ArrayList<Double> perfRelative;
 	private ArrayList<Double> volatilite;
 	private ArrayList<Double> volatiliteAnnualisee;
-	private double trackingError;
-	private double trackingErrorAnnualise;
-	private double ratioInformation;
-	private ArrayList<Double> beta;
-	private ArrayList<Double> alpha;
+	private ArrayList<Double> trackingError;
+	private ArrayList<Double> trackingErrorAnnualise;
+	private ArrayList<Double> ratioInformation;
+	private Double beta;
+	private Double alpha;
 
 	private Stock s;
 	private Date startDate, today, threeMonths, sixMonths, oneYear, threeYears,
@@ -57,7 +60,7 @@ public class CalculerCSV
 		threeYears.setYear(threeYears.getYear() - 3);
 		fiveYears = c.getTime();
 		fiveYears.setYear(fiveYears.getYear() - 5);
-
+		
 	}
 
 	public ArrayList<Double> getPerfAnnualisee()
@@ -242,8 +245,8 @@ public class CalculerCSV
 	}
 
 	/**
-	 * @param d -> détermine la période de volatilité
-	 * 	à calculer
+	 * @param d
+	 *            -> détermine la période de volatilité à calculer
 	 * @return
 	 */
 	public ArrayList<Double> getVolatilite()
@@ -254,23 +257,27 @@ public class CalculerCSV
 		volatilite.add(calculVolatilite(oneYear));
 		volatilite.add(calculVolatilite(threeYears));
 		volatilite.add(calculVolatilite(fiveYears));
-		System.out.println("\nVolatilite : "+volatilite);
+		System.out.println("\nVolatilite : " + volatilite);
 		return volatilite;
 	}
-	
+
 	public ArrayList<Double> getVolatiliteAnnualisee()
 	{
-		ArrayList<Double> volatilite = new ArrayList<Double>();
-		volatilite.add(calculVolatilite(threeMonths));
-		volatilite.add(calculVolatilite(sixMonths));
-		volatilite.add(calculVolatilite(oneYear));
-		volatilite.add(calculVolatilite(threeYears));
-		volatilite.add(calculVolatilite(fiveYears));
-		System.out.println("\nVolatilite : "+volatilite);
-		return volatilite;
+		ArrayList<Double> volatiliteAnnualisee = new ArrayList<Double>();
+		volatiliteAnnualisee.add(Math.sqrt(calculVolatilite(threeMonths))
+				* Math.sqrt(52));
+		volatiliteAnnualisee.add(Math.sqrt(calculVolatilite(sixMonths))
+				* Math.sqrt(52));
+		volatiliteAnnualisee.add(Math.sqrt(calculVolatilite(oneYear))
+				* Math.sqrt(52));
+		volatiliteAnnualisee.add(Math.sqrt(calculVolatilite(threeYears))
+				* Math.sqrt(52));
+		volatiliteAnnualisee.add(Math.sqrt(calculVolatilite(fiveYears))
+				* Math.sqrt(52));
+		System.out.println("\nVolatilite annualisee: " + volatiliteAnnualisee);
+		return volatiliteAnnualisee;
 	}
-	
-	
+
 	public double calculVolatilite(Date d)
 	{
 		Map<Date, Double> m = s.getHistoCours();
@@ -288,8 +295,8 @@ public class CalculerCSV
 			}
 		}
 		r /= cpt;
-		System.out.println("\nR Moyenne : "+r);
-		System.out.println("\nCpt : "+cpt);
+		System.out.println("\nR Moyenne : " + r);
+		System.out.println("\nCpt : " + cpt);
 
 		// CALCUL Ri - R moyenne
 		for (Date key : keys)
@@ -297,10 +304,10 @@ public class CalculerCSV
 			if (key.compareTo(d) == 1)
 				sum += Math.pow(m.get(key) - r, 2);
 		}
-		
+
 		// return m.get(keys.last());
 
-		return sum/(cpt-1);
+		return sum / (cpt - 1);
 	}
 
 	public void setVolatilite(ArrayList<Double> volatilite)
@@ -313,52 +320,197 @@ public class CalculerCSV
 		this.volatiliteAnnualisee = volatiliteAnnualisee;
 	}
 
-	public double getTrackingError()
+	/**
+	 * @return
+	 */
+	public ArrayList<Double> getTrackingError()
 	{
-		return trackingError;
+
+		// System.out.println("\nTracking error:\n");
+		ArrayList<Double> prMap = getPerfRelative(); // performances relatives
+		double prm = 0;// moyenne performances relatives
+		for (double d : prMap)
+			prm += d;
+		prm /= prMap.size();// calcul moyenne
+
+		ArrayList<Double> teMap = new ArrayList<Double>();
+		System.out.println("\nPR(0) : " + prMap.get(0) + "\nPRM : " + prm);
+		for (int i = 0; i < prMap.size(); i++)
+			teMap.add(Math.pow(prMap.get(i) - prm, 2) / (i + 1));
+
+		System.out.println("Tracking Error : " + teMap);
+		// TRI PAR DATE
+		// System.out.println("\ntoday :\n" + today);
+		// System.out.println("\n3M :\n" + threeMonths);
+		// System.out.println("\n6M :\n" + sixMonths);
+		// System.out.println("\n1Y :\n" + oneYear);
+		// System.out.println("\n3Y :\n" + threeYears);
+		// System.out.println("\n5Y :\n" + fiveYears);
+
+		return teMap;
+		// return trackingError;
 	}
 
-	public void setTrackingError(double trackingError)
+	public void setTrackingError(ArrayList<Double> trackingError)
 	{
 		this.trackingError = trackingError;
 	}
 
-	public double getTrackingErrorAnnualise()
+	public ArrayList<Double> getTrackingErrorAnnualise()
 	{
-		return trackingErrorAnnualise;
+		ArrayList<Double> tea = new ArrayList<Double>();
+		for (Double te : getTrackingError())
+			tea.add(Math.sqrt(te) * Math.sqrt(52));
+		System.out.println("Tracking error annualise : " + tea);
+		return tea;
 	}
 
-	public void setTrackingErrorAnnualise(double trackingErrorAnnualise)
+	public void setTrackingErrorAnnualise(
+			ArrayList<Double> trackingErrorAnnualise)
 	{
 		this.trackingErrorAnnualise = trackingErrorAnnualise;
 	}
 
-	public double getRatioInformation()
+	public ArrayList<Double> getRatioInformation()
 	{
-		return ratioInformation;
+		ArrayList<Double> ri = new ArrayList<Double>();
+		ArrayList<Double> pr = getPerfRelative();
+		ArrayList<Double> te = getTrackingError();
+		for (int i = 0; i < pr.size(); i++)
+			ri.add(pr.get(i) / te.get(i));
+		System.out.println("Ratio d'information : " + ri);
+		return ri;
 	}
 
-	public void setRatioInformation(double ratioInformation)
+	public void setRatioInformation(ArrayList<Double> ratioInformation)
 	{
 		this.ratioInformation = ratioInformation;
 	}
 
-	public ArrayList<Double> getBeta()
+	/**
+	 * @param array
+	 * @return un array de double à partir d'une ArrayList de Double
+	 */
+	public static double[] toPrimitive(Double[] array)
 	{
+		if (array == null)
+		{
+			return null;
+		} else if (array.length == 0)
+		{
+			return null;
+		}
+		final double[] result = new double[array.length];
+		for (int i = 0; i < array.length; i++)
+		{
+			result[i] = array[i].doubleValue();
+		}
+		return result;
+	}
+
+	/**
+	 * @return ArrayList des Beta
+	 */
+	public Double getBeta()
+	{
+		Double beta;
+
+		ArrayList<Double> paf = getPerfAnnualisee();
+		double[] pafArray = { paf.get(0), paf.get(1), paf.get(2), paf.get(3),
+				paf.get(4) };
+
+		ArrayList<Double> paBench = new ArrayList<Double>();
+		double daysDiff3M = getDaysBetweenDates(threeMonths, today);
+		double daysDiff6M = getDaysBetweenDates(sixMonths, today);
+		double daysDiff1Y = getDaysBetweenDates(oneYear, today);
+		double daysDiff3Y = getDaysBetweenDates(threeYears, today);
+		double daysDiff5Y = getDaysBetweenDates(fiveYears, today);
+		double perfAnnu3M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeMonths)),
+				(365 / (daysDiff3M))) - 1;
+		double perfAnnu6M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(sixMonths)),
+				(365 / (daysDiff6M))) - 1;
+		double perfAnnu1Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(oneYear)),
+				(365 / (daysDiff1Y))) - 1;
+		double perfAnnu3Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeYears)),
+				(365 / (daysDiff3Y))) - 1;
+		double perfAnnu5Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(fiveYears)),
+				(365 / (daysDiff5Y))) - 1;
+		paBench.add(perfAnnu3M);
+		paBench.add(perfAnnu6M);
+		paBench.add(perfAnnu1Y);
+		paBench.add(perfAnnu3Y);
+		paBench.add(perfAnnu5Y);
+		double[] paBenchArray = { paBench.get(0), paBench.get(1),
+				paBench.get(2), paBench.get(3), paBench.get(4) };
+		
+
+		Covariance c = new Covariance();
+
+		double var = 0;
+		for (Double d : paf)
+			var += d;
+		var /= paf.size();
+		beta = (c.covariance(pafArray, paBenchArray) / var);
+
+		System.out.println("Beta : " + beta);
 		return beta;
 	}
 
-	public void setBeta(ArrayList<Double> beta)
+	public void setBeta(Double beta)
 	{
 		this.beta = beta;
 	}
 
-	public ArrayList<Double> getAlpha()
+	public Double getAlpha()
 	{
+		
+		ArrayList<Double> paf = getPerfAnnualisee();
+		ArrayList<Double> paBench = new ArrayList<Double>();
+		double daysDiff3M = getDaysBetweenDates(threeMonths, today);
+		double daysDiff6M = getDaysBetweenDates(sixMonths, today);
+		double daysDiff1Y = getDaysBetweenDates(oneYear, today);
+		double daysDiff3Y = getDaysBetweenDates(threeYears, today);
+		double daysDiff5Y = getDaysBetweenDates(fiveYears, today);
+		double perfAnnu3M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeMonths)),
+				(365 / (daysDiff3M))) - 1;
+		double perfAnnu6M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(sixMonths)),
+				(365 / (daysDiff6M))) - 1;
+		double perfAnnu1Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(oneYear)),
+				(365 / (daysDiff1Y))) - 1;
+		double perfAnnu3Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeYears)),
+				(365 / (daysDiff3Y))) - 1;
+		double perfAnnu5Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(fiveYears)),
+				(365 / (daysDiff5Y))) - 1;
+		paBench.add(perfAnnu3M);
+		paBench.add(perfAnnu6M);
+		paBench.add(perfAnnu1Y);
+		paBench.add(perfAnnu3Y);
+		paBench.add(perfAnnu5Y);
+		
+		double meanPA=0,meanPAB=0;
+		//Calcul moyenne
+		for(Double d : paf) 
+			meanPA+=d;
+		meanPA/=paf.size();
+		for(Double d : paBench)
+			meanPA+=d;
+		meanPA/=paBench.size();
+		double alpha = meanPA - getBeta()*meanPAB;
+		System.out.println("Alpha: " + alpha);
 		return alpha;
 	}
 
-	public void setAlpha(ArrayList<Double> alpha)
+	public void setAlpha(Double alpha)
 	{
 		this.alpha = alpha;
 	}
