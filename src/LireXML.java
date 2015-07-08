@@ -55,7 +55,13 @@ public class LireXML
 			System.out.println(s.getId());
 			rc = new RecupererCours(s, startdate);
 			s.setHistoCours(rc.getCours());
-			System.out.println(s.getHistoCours());
+			s.setHistoCoursIndex(rc.getCoursIndex());
+			CalculerCSV ccsv = s.getCcsv();
+			ccsv.getPerfAnnualisee();
+			ccsv.getPerfRelative();
+			
+//			System.out.println(s.getHistoCours());
+//			System.out.println(s.getHistoCoursIndex());
 //			s.setHistoCours(rc.getCours(startdate, today, url));
 			
 		}
@@ -148,7 +154,7 @@ public class LireXML
 	// *
 	public Stock stockXML2Node(Node n)
 	{
-		Stock s = new Stock();
+		Stock s = new Stock(startdate);
 		// System.out.println("type :"+n.getNodeType()+"\nvalue :"+n.getNodeValue()+"\nname :"+n.getNodeName());
 		// Element e = n.; // A CORRIGER
 		// System.out.println("nodeValue : "+n.getNodeValue()+n);

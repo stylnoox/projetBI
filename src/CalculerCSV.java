@@ -92,6 +92,44 @@ public class CalculerCSV
 		
 		return perfAnnuMap;
 	}
+	
+	public ArrayList<Double> getPerfRelative()
+	{		
+		System.out.println("\nPerformance relative annualisee :\n");
+		// double perfAnnu=0.0;
+		ArrayList<Double> perfAnnuMap = new ArrayList<Double>();
+		double daysDiff3M = getDaysBetweenDates(threeMonths,today);
+		double daysDiff6M = getDaysBetweenDates(sixMonths,today);
+		double daysDiff1Y = getDaysBetweenDates(oneYear,today);
+		double daysDiff3Y = getDaysBetweenDates(threeYears,today);
+		double daysDiff5Y = getDaysBetweenDates(fiveYears,today);
+		
+		double perfAnnu3M = Math.pow((coursTodayIndex()/coursHistoIndex(threeMonths)),(365/(daysDiff3M)))-1;
+		double perfAnnu6M = Math.pow((coursTodayIndex()/coursHistoIndex(sixMonths)),(365/(daysDiff6M)))-1;
+		double perfAnnu1Y = Math.pow((coursTodayIndex()/coursHistoIndex(oneYear)),(365/(daysDiff1Y)))-1;
+		double perfAnnu3Y = Math.pow((coursTodayIndex()/coursHistoIndex(threeYears)),(365/(daysDiff3Y)))-1;
+		double perfAnnu5Y = Math.pow((coursTodayIndex()/coursHistoIndex(fiveYears)),(365/(daysDiff5Y)))-1;
+		
+		ArrayList<Double> stock = this.getPerfAnnualisee();
+		
+		perfAnnuMap.add(perfAnnu3M-stock.get(0));
+		perfAnnuMap.add(perfAnnu6M-stock.get(1));
+		perfAnnuMap.add(perfAnnu1Y-stock.get(2));
+		perfAnnuMap.add(perfAnnu3Y-stock.get(3));
+		perfAnnuMap.add(perfAnnu5Y-stock.get(4));
+		System.out.println("Perf relative annualisée : "+perfAnnuMap
+				+"\n---------------------------"
+				+ "---------------------\n");
+		// TRI PAR DATE
+		// System.out.println("\ntoday :\n" + today);
+		// System.out.println("\n3M :\n" + threeMonths);
+		// System.out.println("\n6M :\n" + sixMonths);
+		// System.out.println("\n1Y :\n" + oneYear);
+		// System.out.println("\n3Y :\n" + threeYears);
+		// System.out.println("\n5Y :\n" + fiveYears);
+		
+		return perfAnnuMap;
+	}
 
 	/**
 	 * @return Retourne la derniere valeur de cloture
@@ -99,6 +137,16 @@ public class CalculerCSV
 	public double coursToday()
 	{
 		Map<Date, Double> m = s.getHistoCours();
+		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
+		return m.get(keys.last());
+	}
+	
+	/**
+	 * @return Retourne la derniere valeur de cloture
+	 */
+	public double coursTodayIndex()
+	{
+		Map<Date, Double> m = s.getHistoCoursIndex();
 		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
 		return m.get(keys.last());
 	}
@@ -111,6 +159,30 @@ public class CalculerCSV
 	public double coursHisto(Date d)
 	{
 		Map<Date, Double> m = s.getHistoCours();
+		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
+		double cours = 0.0;
+
+		for (Object key : keys)
+		{
+			Date k = (Date) key;
+			if (k.compareTo(d) == 1)
+			{
+				cours = m.get(key);
+				System.out.println("Date: " + key + "\nCours: " + cours);
+				break;
+			}
+		}
+		return cours;
+	}
+	
+	/**
+	 * @param d
+	 *            -> Date du cours souhaite
+	 * @return la valeur du cours a la date d
+	 */
+	public double coursHistoIndex(Date d)
+	{
+		Map<Date, Double> m = s.getHistoCoursIndex();
 		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
 		double cours = 0.0;
 
@@ -151,11 +223,7 @@ public class CalculerCSV
 		this.perfAnnualisee = perfAnnualisee;
 	}
 
-	public ArrayList<Double> getPerfRelative()
-	{
-		return perfRelative;
-	}
-
+	
 	public void setPerfRelative(ArrayList<Double> perfRelative)
 	{
 		this.perfRelative = perfRelative;
