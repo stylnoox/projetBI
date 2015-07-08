@@ -59,11 +59,11 @@ public class LireXML
 			CalculerCSV ccsv = s.getCcsv();
 			ccsv.getPerfAnnualisee();
 			ccsv.getPerfRelative();
-			
+			ccsv.getVolatilite();
 //			System.out.println(s.getHistoCours());
 //			System.out.println(s.getHistoCoursIndex());
 //			s.setHistoCours(rc.getCours(startdate, today, url));
-			
+			System.out.println("\n---------------------------" + "---------------------\n");
 		}
 		
 	}

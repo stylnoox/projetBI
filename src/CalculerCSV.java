@@ -12,6 +12,7 @@ public class CalculerCSV
 {
 	// Les ArrayList contiennent le résutlat des calculs pour :
 	// 3M, 6M, 1Y, 3Y, 5Y
+
 	private ArrayList<Integer> period = new ArrayList<Integer>();
 
 	private ArrayList<Double> perfAnnualisee;
@@ -25,7 +26,8 @@ public class CalculerCSV
 	private ArrayList<Double> alpha;
 
 	private Stock s;
-	private Date startDate, today, threeMonths, sixMonths, oneYear, threeYears, fiveYears;
+	private Date startDate, today, threeMonths, sixMonths, oneYear, threeYears,
+			fiveYears;
 
 	@SuppressWarnings("deprecation")
 	public CalculerCSV(Stock s, Date startDate)
@@ -63,25 +65,28 @@ public class CalculerCSV
 		System.out.println("\nPerformance annualisee :\n");
 		// double perfAnnu=0.0;
 		ArrayList<Double> perfAnnuMap = new ArrayList<Double>();
-		double daysDiff3M = getDaysBetweenDates(threeMonths,today);
-		double daysDiff6M = getDaysBetweenDates(sixMonths,today);
-		double daysDiff1Y = getDaysBetweenDates(oneYear,today);
-		double daysDiff3Y = getDaysBetweenDates(threeYears,today);
-		double daysDiff5Y = getDaysBetweenDates(fiveYears,today);
-		
-		double perfAnnu3M = Math.pow((coursToday()/coursHisto(threeMonths)),(365/(daysDiff3M)))-1;
-		double perfAnnu6M = Math.pow((coursToday()/coursHisto(sixMonths)),(365/(daysDiff6M)))-1;
-		double perfAnnu1Y = Math.pow((coursToday()/coursHisto(oneYear)),(365/(daysDiff1Y)))-1;
-		double perfAnnu3Y = Math.pow((coursToday()/coursHisto(threeYears)),(365/(daysDiff3Y)))-1;
-		double perfAnnu5Y = Math.pow((coursToday()/coursHisto(fiveYears)),(365/(daysDiff5Y)))-1;
+		double daysDiff3M = getDaysBetweenDates(threeMonths, today);
+		double daysDiff6M = getDaysBetweenDates(sixMonths, today);
+		double daysDiff1Y = getDaysBetweenDates(oneYear, today);
+		double daysDiff3Y = getDaysBetweenDates(threeYears, today);
+		double daysDiff5Y = getDaysBetweenDates(fiveYears, today);
+
+		double perfAnnu3M = Math.pow((coursToday() / coursHisto(threeMonths)),
+				(365 / (daysDiff3M))) - 1;
+		double perfAnnu6M = Math.pow((coursToday() / coursHisto(sixMonths)),
+				(365 / (daysDiff6M))) - 1;
+		double perfAnnu1Y = Math.pow((coursToday() / coursHisto(oneYear)),
+				(365 / (daysDiff1Y))) - 1;
+		double perfAnnu3Y = Math.pow((coursToday() / coursHisto(threeYears)),
+				(365 / (daysDiff3Y))) - 1;
+		double perfAnnu5Y = Math.pow((coursToday() / coursHisto(fiveYears)),
+				(365 / (daysDiff5Y))) - 1;
 		perfAnnuMap.add(perfAnnu3M);
 		perfAnnuMap.add(perfAnnu6M);
 		perfAnnuMap.add(perfAnnu1Y);
 		perfAnnuMap.add(perfAnnu3Y);
 		perfAnnuMap.add(perfAnnu5Y);
-		System.out.println("Perf annualisée : "+perfAnnuMap
-				+"\n---------------------------"
-				+ "---------------------\n");
+		System.out.println("Perf annualisée : " + perfAnnuMap);
 		// TRI PAR DATE
 		// System.out.println("\ntoday :\n" + today);
 		// System.out.println("\n3M :\n" + threeMonths);
@@ -89,37 +94,45 @@ public class CalculerCSV
 		// System.out.println("\n1Y :\n" + oneYear);
 		// System.out.println("\n3Y :\n" + threeYears);
 		// System.out.println("\n5Y :\n" + fiveYears);
-		
+
 		return perfAnnuMap;
 	}
-	
+
 	public ArrayList<Double> getPerfRelative()
-	{		
+	{
 		System.out.println("\nPerformance relative annualisee :\n");
 		// double perfAnnu=0.0;
 		ArrayList<Double> perfAnnuMap = new ArrayList<Double>();
-		double daysDiff3M = getDaysBetweenDates(threeMonths,today);
-		double daysDiff6M = getDaysBetweenDates(sixMonths,today);
-		double daysDiff1Y = getDaysBetweenDates(oneYear,today);
-		double daysDiff3Y = getDaysBetweenDates(threeYears,today);
-		double daysDiff5Y = getDaysBetweenDates(fiveYears,today);
-		
-		double perfAnnu3M = Math.pow((coursTodayIndex()/coursHistoIndex(threeMonths)),(365/(daysDiff3M)))-1;
-		double perfAnnu6M = Math.pow((coursTodayIndex()/coursHistoIndex(sixMonths)),(365/(daysDiff6M)))-1;
-		double perfAnnu1Y = Math.pow((coursTodayIndex()/coursHistoIndex(oneYear)),(365/(daysDiff1Y)))-1;
-		double perfAnnu3Y = Math.pow((coursTodayIndex()/coursHistoIndex(threeYears)),(365/(daysDiff3Y)))-1;
-		double perfAnnu5Y = Math.pow((coursTodayIndex()/coursHistoIndex(fiveYears)),(365/(daysDiff5Y)))-1;
-		
+		double daysDiff3M = getDaysBetweenDates(threeMonths, today);
+		double daysDiff6M = getDaysBetweenDates(sixMonths, today);
+		double daysDiff1Y = getDaysBetweenDates(oneYear, today);
+		double daysDiff3Y = getDaysBetweenDates(threeYears, today);
+		double daysDiff5Y = getDaysBetweenDates(fiveYears, today);
+
+		double perfAnnu3M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeMonths)),
+				(365 / (daysDiff3M))) - 1;
+		double perfAnnu6M = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(sixMonths)),
+				(365 / (daysDiff6M))) - 1;
+		double perfAnnu1Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(oneYear)),
+				(365 / (daysDiff1Y))) - 1;
+		double perfAnnu3Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(threeYears)),
+				(365 / (daysDiff3Y))) - 1;
+		double perfAnnu5Y = Math.pow(
+				(coursTodayIndex() / coursHistoIndex(fiveYears)),
+				(365 / (daysDiff5Y))) - 1;
+
 		ArrayList<Double> stock = this.getPerfAnnualisee();
-		
-		perfAnnuMap.add(perfAnnu3M-stock.get(0));
-		perfAnnuMap.add(perfAnnu6M-stock.get(1));
-		perfAnnuMap.add(perfAnnu1Y-stock.get(2));
-		perfAnnuMap.add(perfAnnu3Y-stock.get(3));
-		perfAnnuMap.add(perfAnnu5Y-stock.get(4));
-		System.out.println("Perf relative annualisée : "+perfAnnuMap
-				+"\n---------------------------"
-				+ "---------------------\n");
+
+		perfAnnuMap.add(perfAnnu3M - stock.get(0));
+		perfAnnuMap.add(perfAnnu6M - stock.get(1));
+		perfAnnuMap.add(perfAnnu1Y - stock.get(2));
+		perfAnnuMap.add(perfAnnu3Y - stock.get(3));
+		perfAnnuMap.add(perfAnnu5Y - stock.get(4));
+		System.out.println("Perf relative annualisée : " + perfAnnuMap);
 		// TRI PAR DATE
 		// System.out.println("\ntoday :\n" + today);
 		// System.out.println("\n3M :\n" + threeMonths);
@@ -127,7 +140,7 @@ public class CalculerCSV
 		// System.out.println("\n1Y :\n" + oneYear);
 		// System.out.println("\n3Y :\n" + threeYears);
 		// System.out.println("\n5Y :\n" + fiveYears);
-		
+
 		return perfAnnuMap;
 	}
 
@@ -140,7 +153,7 @@ public class CalculerCSV
 		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
 		return m.get(keys.last());
 	}
-	
+
 	/**
 	 * @return Retourne la derniere valeur de cloture
 	 */
@@ -174,7 +187,7 @@ public class CalculerCSV
 		}
 		return cours;
 	}
-	
+
 	/**
 	 * @param d
 	 *            -> Date du cours souhaite
@@ -223,25 +236,76 @@ public class CalculerCSV
 		this.perfAnnualisee = perfAnnualisee;
 	}
 
-	
 	public void setPerfRelative(ArrayList<Double> perfRelative)
 	{
 		this.perfRelative = perfRelative;
 	}
 
+	/**
+	 * @param d -> détermine la période de volatilité
+	 * 	à calculer
+	 * @return
+	 */
 	public ArrayList<Double> getVolatilite()
 	{
+		ArrayList<Double> volatilite = new ArrayList<Double>();
+		volatilite.add(calculVolatilite(threeMonths));
+		volatilite.add(calculVolatilite(sixMonths));
+		volatilite.add(calculVolatilite(oneYear));
+		volatilite.add(calculVolatilite(threeYears));
+		volatilite.add(calculVolatilite(fiveYears));
+		System.out.println("\nVolatilite : "+volatilite);
 		return volatilite;
+	}
+	
+	public ArrayList<Double> getVolatiliteAnnualisee()
+	{
+		ArrayList<Double> volatilite = new ArrayList<Double>();
+		volatilite.add(calculVolatilite(threeMonths));
+		volatilite.add(calculVolatilite(sixMonths));
+		volatilite.add(calculVolatilite(oneYear));
+		volatilite.add(calculVolatilite(threeYears));
+		volatilite.add(calculVolatilite(fiveYears));
+		System.out.println("\nVolatilite : "+volatilite);
+		return volatilite;
+	}
+	
+	
+	public double calculVolatilite(Date d)
+	{
+		Map<Date, Double> m = s.getHistoCours();
+		SortedSet<Date> keys = new TreeSet<Date>(m.keySet());
+		double sum = 0, r = 0;
+		int cpt = 0;
+
+		// CALCUL R moyenne
+		for (Date key : keys)
+		{
+			if (key.compareTo(d) == 1)
+			{
+				r += m.get(key);
+				cpt++;
+			}
+		}
+		r /= cpt;
+		System.out.println("\nR Moyenne : "+r);
+		System.out.println("\nCpt : "+cpt);
+
+		// CALCUL Ri - R moyenne
+		for (Date key : keys)
+		{
+			if (key.compareTo(d) == 1)
+				sum += Math.pow(m.get(key) - r, 2);
+		}
+		
+		// return m.get(keys.last());
+
+		return sum/(cpt-1);
 	}
 
 	public void setVolatilite(ArrayList<Double> volatilite)
 	{
 		this.volatilite = volatilite;
-	}
-
-	public ArrayList<Double> getVolatiliteAnnualisee()
-	{
-		return volatiliteAnnualisee;
 	}
 
 	public void setVolatiliteAnnualisee(ArrayList<Double> volatiliteAnnualisee)
@@ -410,7 +474,8 @@ public class CalculerCSV
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(Date startDate)
 	{
