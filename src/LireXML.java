@@ -72,6 +72,7 @@ public class LireXML
 			System.out.println("\n---------------------------"
 					+ "---------------------\n");
 		}
+		creerXML cxml = new creerXML(stockArray, startdate);
 
 	}
 
